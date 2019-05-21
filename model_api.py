@@ -8,8 +8,6 @@ import numpy as np
 
 nltk.download('wordnet')
 
-vocab_l = pickle.load(open('vocab.pickle', 'rb'))
-
 import torch
 
 from sentiment import TextClassifier
@@ -109,6 +107,9 @@ def predict_func(text, model, vocab):
     pred = torch.exp(logps) 
     
     return pred
+
+
+vocab_l = pickle.load(open('vocab.pickle', 'rb'))
 
 
 def predict_api(args):

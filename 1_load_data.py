@@ -1,4 +1,4 @@
-with open('twits_dumped.json', 'r') as f:
+with open('output.json', 'r') as f:
     twits = json.load(f)
 
 print(twits['data'][:10])

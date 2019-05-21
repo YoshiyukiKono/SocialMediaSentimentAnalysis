@@ -30,5 +30,4 @@ print("sorted_vocab - least:", sorted_vocab[-15:])
 total_count = len(words)
 freqs = {word: count/total_count for word, count in word_counts.items()}
 
-print("freqs[supplication]:",freqs["supplication"] )
 print("freqs[the]:",freqs["the"] )

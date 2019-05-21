@@ -6,6 +6,7 @@ The features are the `token_ids` and the labels are the `sentiments`.
 # TODO Implement 
 
 split_frac = 0.8
+split_frac = 0.98 # for small data (must be more than 64) !!!!!!!!!!!!!!!!!!!!!!! TODO Recovery
 
 ## split data into training, validation, and test data (features and labels, x and y)
 
@@ -37,11 +38,12 @@ Print the training loss, validation loss, and validation accuracy for every 100 
 import numpy as np
 
 epochs = 4 #pass
+
 batch_size =  64#pass
 batch_size =  512#pass
 learning_rate = 0.001 #pass
 
-print_every = 100
+print_every = 1#100
 criterion = nn.NLLLoss()
 optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 model.train()
