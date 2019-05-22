@@ -37,13 +37,14 @@ Print the training loss, validation loss, and validation accuracy for every 100 
 """
 import numpy as np
 
-epochs = 4 #pass
+epochs = 4
 
-batch_size =  64#pass
-batch_size =  512#pass
-learning_rate = 0.001 #pass
+batch_size =  64
+batch_size =  512
+learning_rate = 0.001
 
-print_every = 1#100
+print_every = 1#100 # for small data !!!!!!!!!!!!!!!!!!!!!!! TODO Recovery
+
 criterion = nn.NLLLoss()
 optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 model.train()
@@ -65,7 +66,7 @@ for epoch in range(epochs):
         for each in hidden:
             each.to(device)
         
-        # TODO Implement: Train Model
+        # Train Model
         hidden = tuple([each.data for each in hidden])
         model.zero_grad()
         output, hidden = model(text_batch, hidden)
@@ -85,23 +86,26 @@ for epoch in range(epochs):
             # Calculate accuracy
             ps = torch.exp(output)
             top_p, top_class = ps.topk(1, dim=1)
-            #?top_class = top_class.to(device)
-            #?labels = labels.to(device)
 
             correct_count += torch.sum(top_class.squeeze()== labels)
             accuracy.append(100*correct_count/len(labels))
             
-            # TODO Implement: Print metrics
+            # Print metrics
             print("Epoch: {}/{}...".format(epoch+1, epochs),
                  "Step: {}...".format(steps),
-                 "Loss: {:.6f}...".format(loss.item()),
-                 "Val Loss: {:.6f}".format(np.mean(val_losses)),
                  "Collect Count: {}".format(correct_count),
-                 "Accuracy: {:.2f}".format((100*correct_count/len(labels)))#,
-                 #"Accuracy Avg: {:.2f}".format(np.mean(accuracy))
+                 "Loss: {:.6f}...".format(loss.item()),
+                 "Loss Avg: {:.6f}".format(np.mean(val_losses)),
+                 "Accuracy: {:.2f}".format((100*correct_count/len(labels))),
+                 "Accuracy Avg: {:.2f}".format(np.mean(accuracy))
                  )
             
             model.train()
+
+
+
+print("Last Loss Avg: {:.6f}".format(np.mean(val_losses)))
+print("Last Accuracy Avg: {:.2f}".format(np.mean(accuracy)))
 
 torch.save(model.state_dict(), "./model.pth")
 torch.save(model, "./model.torch")

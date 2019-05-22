@@ -1,3 +1,6 @@
+import glob
+print(glob.glob("/home/cdsw/*"))
+
 import pickle
 import re
 import nltk
@@ -12,10 +15,15 @@ import torch
 
 from sentiment import TextClassifier
 
+import os
+import sys
+cur_dir = os.path.dirname(os.path.abspath('__file__'))
+print(cur_dir)
+sys.path.append(cur_dir)
 
-PATH = "./model.torch"
+model_path = cur_dir + "/" + "model.torch"
 # torch.load with map_location='cpu'
-model_l = torch.load(PATH,map_location='cpu')
+model_l = torch.load(model_path, map_location='cpu')
 #model_l.to("cpu")
 
 class UnknownWordsError(Exception):
@@ -109,7 +117,9 @@ def predict_func(text, model, vocab):
     return pred
 
 
-vocab_l = pickle.load(open('vocab.pickle', 'rb'))
+vocab_filename = 'vocab.pickle'
+vocab_path = cur_dir + "/" + vocab_filename
+vocab_l = pickle.load(open(vocab_path, 'rb'))
 
 
 def predict_api(args):
