@@ -6,7 +6,7 @@ The features are the `token_ids` and the labels are the `sentiments`.
 # TODO Implement 
 
 split_frac = 0.8
-split_frac = 0.98 # for small data (must be more than 64) !!!!!!!!!!!!!!!!!!!!!!! TODO Recovery
+#split_frac = 0.98 # for small data (must be more than 64) !!!!!!!!!!!!!!!!!!!!!!! TODO Recovery
 
 ## split data into training, validation, and test data (features and labels, x and y)
 
@@ -43,7 +43,8 @@ batch_size =  64
 batch_size =  512
 learning_rate = 0.001
 
-print_every = 1#100 # for small data !!!!!!!!!!!!!!!!!!!!!!! TODO Recovery
+print_every = 100
+#print_every = 1#100 # for small data !!!!!!!!!!!!!!!!!!!!!!! TODO Recovery
 
 criterion = nn.NLLLoss()
 optimizer = optim.Adam(model.parameters(), lr=learning_rate)
@@ -88,15 +89,26 @@ for epoch in range(epochs):
             top_p, top_class = ps.topk(1, dim=1)
 
             correct_count += torch.sum(top_class.squeeze()== labels)
-            accuracy.append(100*correct_count/len(labels))
+            
+            
+            label_count = len(labels)
+            #print(label_count)
+            #print(correct_count.cpu().numpy())
+            
+            correct_count_num = correct_count.cpu().numpy()
+            #print(correct_count_num/label_count)
+            
+            accuracy.append(correct_count_num/label_count)
             
             # Print metrics
             print("Epoch: {}/{}...".format(epoch+1, epochs),
                  "Step: {}...".format(steps),
                  "Collect Count: {}".format(correct_count),
+                 "Total Count: {}".format(len(labels)),
                  "Loss: {:.6f}...".format(loss.item()),
                  "Loss Avg: {:.6f}".format(np.mean(val_losses)),
-                 "Accuracy: {:.2f}".format((100*correct_count/len(labels))),
+                 #"Accuracy: {:.2f}".format((100*correct_count_num/len(labels))),
+                 "Accuracy: {:.2f}".format(correct_count_num/label_count),
                  "Accuracy Avg: {:.2f}".format(np.mean(accuracy))
                  )
             

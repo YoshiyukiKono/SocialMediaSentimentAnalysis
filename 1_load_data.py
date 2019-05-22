@@ -1,4 +1,7 @@
-with open('output.json', 'r') as f:
+training_data_file_name = 'output.json'
+#training_data_file_name = 'twits_dumped.json'
+
+with open(training_data_file_name, 'r') as f:
     twits = json.load(f)
 
 print(twits['data'][:10])

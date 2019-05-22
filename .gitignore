@@ -1,8 +1,9 @@
 ## for this project
+# Please remove the relevant lines when you deploy a model on CDSW
 *.pickle
+*.torch
 *.pkl
 *.pth
-*.torch
 nltk_data
 
 ## for Mac
