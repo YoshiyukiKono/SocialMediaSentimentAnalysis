@@ -2,9 +2,6 @@
 Split data into training and validation datasets. Use an appropriate split size.
 The features are the `token_ids` and the labels are the `sentiments`.
 """   
-
-# TODO Implement 
-
 split_frac = 0.8
 #split_frac = 0.98 # for small data (must be more than 64) !!!!!!!!!!!!!!!!!!!!!!! TODO Recovery
 

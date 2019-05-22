@@ -8,6 +8,6 @@ import torch
 from torch import nn, optim
 import torch.nn.functional as F
 
-from sentiment import TextClassifier, dataloader
+from Asentiment import TextClassifier, dataloader
 
 import numpy as np

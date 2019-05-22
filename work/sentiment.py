@@ -3,8 +3,36 @@ import random
 import torch
 from torch import nn, optim
 
-def test_func():
-  print("test")
+def create_model(token_ids, split_frac = 0.8):
+  """
+  Split data into training and validation datasets.
+  The features are the `token_ids` and the labels are the `sentiments`.
+  """   
+  #split_frac = 0.98 # for small data (must be more than 64) !!!!!!!!!!!!!!!!!!!!!!! TODO Recovery
+
+  ## split data into training, validation, and test data (features and labels, x and y)
+
+  split_idx = int(len(token_ids)*split_frac)
+  train_features, remaining_features = token_ids[:split_idx], token_ids[split_idx:]
+  train_labels, remaining_labels = sentiments[:split_idx], sentiments[split_idx:]
+
+  test_idx = int(len(remaining_features)*0.5)
+  valid_features, test_features = remaining_features[:test_idx], remaining_features[test_idx:]
+  valid_labels, test_labels = remaining_labels[:test_idx], remaining_labels[test_idx:]
+
+
+  text_batch, labels = next(iter(dataloader(train_features, train_labels, sequence_length=20, batch_size=64)))
+  model = TextClassifier(len(vocab)+1, 200, 128, 5, dropout=0.)
+  hidden = model.init_hidden(64)
+  logps, hidden = model.forward(text_batch, hidden)
+
+  device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+  model = TextClassifier(len(vocab)+1, 1024, 512, 5, lstm_layers=2, dropout=0.2)
+  model.embedding.weight.data.uniform_(-1, 1)
+  model.to(device)
+  return model
+
 
 def dataloader(messages, labels, sequence_length=30, batch_size=32, shuffle=False):
     """ 

@@ -4,6 +4,10 @@
 *.torch
 *.pkl
 *.pth
+
+# Please edit the lines below when you use json file for Experiments as input
+*.json
+
 nltk_data
 
 ## for Mac
@@ -20,7 +24,6 @@ nltk_data
 .local
 .nv
 .oracle_jre_usage
-*.json
 .pip
 __pycache__
 .viminfo

@@ -5,3 +5,4 @@ hidden = model.init_hidden(4)
 
 logps, _ = model.forward(input, hidden)
 print(logps)
+
