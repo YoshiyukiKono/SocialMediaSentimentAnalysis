@@ -123,10 +123,9 @@ def predict_api(args):
     return [0,0,1,0,0]
     
 
-args = {"text": "Google is working on self driving cars, I'm bullish on $goog"}
+#args = {"text": "Google is working on self driving cars, I'm bullish on $goog"}
 #args = {"text": "I'm bullish on $goog"}
 args = {"text": "I'll strongly recommend to buy on $goog"}
-#args = {"text": "日本語だとどうなる $goog"}
 #args = {"text": "elyoq baoq pquq $goog"}
 result = predict_api(args)
 print(result)
