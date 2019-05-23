@@ -12,8 +12,6 @@ import numpy as np
 
 def read_file(training_data_file_name):
 
-  #training_data_file_name = 'twits_dumped.json'
-
   with open(training_data_file_name, 'r') as f:
       twits = json.load(f)
 
@@ -21,7 +19,7 @@ def read_file(training_data_file_name):
   print(len(twits['data']))
 
   messages = [twit['message_body'] for twit in twits['data']]
-  # Since the sentiment scores are discrete, we'll scale the sentiments to 0 to 4 for use in our network
+  # Since the sentiment scores are discrete, scale the sentiments to 0 to 4 for use in the network
   sentiments = [twit['sentiment'] + 2 for twit in twits['data']]
 
   return messages, sentiments
@@ -45,7 +43,6 @@ def preprocess(message):
     -------
         tokens: The preprocessed text into tokens.
     """ 
-    #TODO: Implement 
     
     # Lowercase the twit message
     text = message.lower()
@@ -73,15 +70,8 @@ def preprocess(message):
     return tokens
 
 
-
-
-
 def bow(tokenized):
 
-  #words = []
-  #for tokens in tokenized:
-  #    for token in tokens:
-  #        words.append(token)
   out_list = tokenized
   words = [element for in_list in out_list for element in in_list]
 
@@ -116,14 +106,6 @@ def cutoff(sorted_vocab, tokenized, freqs, low_cutoff = 0.000002, high_cutoff = 
   # high_cutoff: Float that is the frequency cutoff. Drop words with a frequency that is higher or equal to this number.
 
   # Integer that is the cut off for most common words. Drop words that are the `high_cutoff` most common words.
-  """
-  example_count = []
-  example_count.append(sorted_vocab.index("the"))
-  example_count.append(sorted_vocab.index("for"))
-  example_count.append(sorted_vocab.index("of"))
-  print(example_count)
-  high_cutoff = min(example_count)
-  """
   
   print("high_cutoff:",high_cutoff)
   print("low_cutoff:",low_cutoff)
