@@ -6,9 +6,6 @@ import re
 import nltk
 import numpy as np
 
-#with open('vocab.pickle', 'rb') as f:
-#    vocab_l = pickle.load(f)
-
 nltk.download('wordnet')
 
 import torch
@@ -22,9 +19,7 @@ print(cur_dir)
 sys.path.append(cur_dir)
 
 model_path = cur_dir + "/" + "model.torch"
-# torch.load with map_location='cpu'
 model_l = torch.load(model_path, map_location='cpu')
-#model_l.to("cpu")
 
 class UnknownWordsError(Exception):
   "Only unknown words are included in text"
@@ -47,7 +42,6 @@ def preprocess(message):
     -------
         tokens: The preprocessed text into tokens.
     """ 
-    #TODO: Implement 
     
     # Lowercase the twit message
     text = message.lower()
@@ -89,10 +83,8 @@ def predict_func(text, model, vocab):
     -------
         pred : Prediction vector
     """
-    
-    # TODO Implement
-    tokens = preprocess(text)
-    
+
+    tokens = preprocess(text)    
 
     # Filter non-vocab words
     tokens = [token for token in tokens if token in vocab] #pass
@@ -131,7 +123,6 @@ def predict_api(args):
     return [0,0,1,0,0]
     
 
-#"message": "The result could not be encoded in JSON.",
 args = {"text": "Google is working on self driving cars, I'm bullish on $goog"}
 #args = {"text": "I'm bullish on $goog"}
 args = {"text": "I'll strongly recommend to buy on $goog"}
