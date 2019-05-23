@@ -1,7 +1,9 @@
 # Social Media Sentiment Analysis
 
 ## Requirement
-Python 3 : number of decimal format
+Python 3 : "number of decimal format"
+
+Spark is not used in this project. So, you do not have to care about the version of Python available for your Spark cluster.
 
 ## Instruction
 
@@ -13,7 +15,7 @@ $ ./cdsw-build.sh
 Run `json_get.py`.
 
 RUn `train_model.py`. 
-(This script is able to run on Experiments. But you need to run on Python session to use GPU.)
+Note: This script is able to run on Experiments. But you need to run on Python session to use GPU.
 
 Use `model_api.py` for Model.
 
