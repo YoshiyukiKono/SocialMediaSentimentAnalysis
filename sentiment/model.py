@@ -32,41 +32,12 @@ def load_data(messages, labels, sequence_length=30, batch_size=32, shuffle=False
         
         yield batch, label_tensor
 
-def test_model(model, train_features, train_labels, epochs = 4, batch_size =  512, learning_rate = 0.001, print_every = 100):
-  """
-  Train your model with dropout. Make sure to clip your gradients.
-  Print the training loss, validation loss, and validation accuracy for every 100 steps.
-  """ 
-  #print_every = 1#100 # for small data !!!!!!!!!!!!!!!!!!!!!!! TODO Recovery
-
-  criterion = nn.NLLLoss()
-  optimizer = optim.Adam(model.parameters(), lr=learning_rate)
-  model.train()
-
-  val_losses = []
-  accuracy = []
-
-  for text_batch, labels in load_data(
-          train_features, train_labels, batch_size=batch_size, sequence_length=20, shuffle=True):
-
-    # Set Device
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    text_batch, labels = text_batch.to(device), labels.to(device)
-
-    # Test Model
-    with torch.no_grad():
-      outputs = model(text_batch)
-      _, predicted = torch.max(outputs.data, 1)
-  print("Last Loss Avg: {:.6f}".format(np.mean(val_losses)))
-  print("Last Accuracy Avg: {:.2f}".format(np.mean(accuracy)))
-
 
 def train_model(model, train_features, train_labels, epochs = 4, batch_size =  512, learning_rate = 0.001, print_every = 100):
   """
-  Train your model with dropout. Make sure to clip your gradients.
+  Train a model with dropout. Clip gradients.
   Print the training loss, validation loss, and validation accuracy for every 100 steps.
   """ 
-  #print_every = 1#100 # for small data !!!!!!!!!!!!!!!!!!!!!!! TODO Recovery
 
   criterion = nn.NLLLoss()
   optimizer = optim.Adam(model.parameters(), lr=learning_rate)
@@ -148,7 +119,6 @@ def split_data(token_ids, sentiments, vocab, split_frac = 0.8):
   Split data into training and validation datasets.
   The features are the `token_ids` and the labels are the `sentiments`.
   """   
-  #split_frac = 0.98 # for small data (must be more than 64) !!!!!!!!!!!!!!!!!!!!!!! TODO Recovery
 
   ## split data into training, validation, and test data (features and labels, x and y)
   split_idx = int(len(token_ids)*split_frac)
@@ -159,6 +129,7 @@ def split_data(token_ids, sentiments, vocab, split_frac = 0.8):
   valid_features, test_features = remaining_features[:test_idx], remaining_features[test_idx:]
   valid_labels, test_labels = remaining_labels[:test_idx], remaining_labels[test_idx:]
   return train_features, train_labels, test_features, test_labels, valid_features, valid_labels
+
 
 def create_model(train_features, train_labels, vocab):
 
@@ -225,9 +196,7 @@ class TextClassifier(nn.Module):
             hidden_state
             
         """
-        
-        # TODO Implement 
-        
+
         # Create two new tensors with sizes n_layers x batch_size x hidden_dim,
         # initialized to zero, for hidden state and cell state of LSTM
         
@@ -254,8 +223,7 @@ class TextClassifier(nn.Module):
             hidden_state: The new hidden state.
 
         """
-        
-        # TODO Implement 
+
         batch_size = nn_input.size(0)
         
         embeds = self.embedding(nn_input)
@@ -263,11 +231,11 @@ class TextClassifier(nn.Module):
         
         #lstm_out = lstm_out.contiguous().view(-1, self.lstm_size)    
         """
-        remember here you do not have batch_first=True, 
-        so accordingly shape your input. 
-        Moreover, since now input is seq_length x batch you just need to transform lstm_out = lstm_out[-1,:,:].
-        you don't have to use batch_first=True in this case, 
-        nor reshape the outputs with .view just transform your lstm_out as advised and you should be good to go.
+        do not have batch_first=True, 
+        so accordingly shape a input. 
+        Moreover, since now input is seq_length x batch, just need to transform lstm_out = lstm_out[-1,:,:].
+        Don't have to use batch_first=True in this case, 
+        nor reshape the outputs with .view just transform lstm_out as above
         """
         lstm_out = lstm_out[-1,:,:]
         
