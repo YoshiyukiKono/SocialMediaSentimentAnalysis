@@ -10,7 +10,7 @@ nltk.download('wordnet')
 
 import torch
 
-from Asentiment import TextClassifier
+#from sentiment import TextClassifier
 
 import os
 import sys
