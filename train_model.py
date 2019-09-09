@@ -28,14 +28,14 @@ print(type(token_ids))
 print(len(token_ids)*0.5)
 split_idx = int(len(token_ids)*0.5)
 
-# split_frac = 0.98 # for small data
-split_flac = 0.8 # for big data
+split_frac = 0.98 # for small data
+#split_frac = 0.8 # for big data
 train_features, train_labels, tf, tl, vf, vl = split_data(token_ids, sentiments, vocab, split_frac = split_frac)
 
 model = create_model(train_features, train_labels, vocab)
 
-#acc, loss = train_model(model, train_features, train_labels, print_every = 1) # for small data
-acc, loss = train_model(model, train_features, train_labels)
+acc, loss = train_model(model, train_features, train_labels, print_every = 1) # for small data
+#acc, loss = train_model(model, train_features, train_labels) # for big data
 
 import cdsw
 model_filename = "model.torch"
