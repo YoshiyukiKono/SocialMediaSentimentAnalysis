@@ -14,7 +14,7 @@ $ ./cdsw-build.sh
 ```
 Run `json_get.py`.
 
-RUn `train_model.py`. 
+Run `train_model.py`. 
 Note: This script is able to run on Experiments. But you need to run on Python session to use GPU.
 
 Use `model_api.py` for Model.
